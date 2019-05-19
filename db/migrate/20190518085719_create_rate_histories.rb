@@ -8,5 +8,6 @@ class CreateRateHistories < ActiveRecord::Migration[5.2]
     end
     add_foreign_key :rate_histories, :exchangeable_currencies
     add_index :rate_histories, :date
+    add_index :rate_histories, :exchangeable_currency_id
   end
 end

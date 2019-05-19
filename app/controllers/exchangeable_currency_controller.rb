@@ -1,7 +1,12 @@
 class ExchangeableCurrencyController < ApplicationController
   skip_before_action :verify_authenticity_token
   def index
-    render json: ExchangeableCurrency.all
+    unless params[:from].present?
+      currency = ExchangeableCurrency.all
+    else
+      currency = ExchangeableCurrency.where(from: params[:from]) if params[:from].present?
+    end
+    render json: currency
   end
 
   def show
@@ -9,18 +14,18 @@ class ExchangeableCurrencyController < ApplicationController
   end
 
   def create
-    render json: ExchangeableCurrency.create!(currency_params), status: :ok
+    render json: ExchangeableCurrency.create(currency_params), status: :ok
   end
 
   def destroy
     currency = current_currency
-    currency.destroy!
+    currency.destroy
     render json: { status: 200 }
   end
 
   def update
     currency = current_currency
-    currency.update(currency_params)
+    currency.update_attributes(currency_params)
     render json: current_currency, status: :ok
   end
 
@@ -31,5 +36,9 @@ class ExchangeableCurrencyController < ApplicationController
 
   def current_currency
     ExchangeableCurrency.find(params[:id])
+  end
+
+  def filtering_params
+    params.slice(ExchangeableCurrency.column_names)
   end
 end

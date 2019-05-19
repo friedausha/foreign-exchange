@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 2019_05_18_085719) do
     t.string "to"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["from"], name: "index_exchangeable_currencies_on_from"
   end
 
   create_table "rate_histories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -25,7 +26,8 @@ ActiveRecord::Schema.define(version: 2019_05_18_085719) do
     t.float "rate"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["exchangeable_currency_id"], name: "fk_rails_48bc1d6e76"
+    t.index ["date"], name: "index_rate_histories_on_date"
+    t.index ["exchangeable_currency_id"], name: "index_rate_histories_on_exchangeable_currency_id"
   end
 
   add_foreign_key "rate_histories", "exchangeable_currencies"

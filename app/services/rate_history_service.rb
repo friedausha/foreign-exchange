@@ -10,12 +10,12 @@ module RateHistoryService
 
     def seven_days_average(date, exchangeable_currency_id)
       recent_rates = find_recent_week_rate(date, exchangeable_currency_id)
-      recent_rates_array = recent_rates.(select: 'rate').map(&rate)
-      count_average(recent_rates_array)
+      rates_array = recent_rates.map{ |rate| rate.rate }
+      count_average(rates_array)
     end
 
     def count_variance(numbers)
-      numbers.values.map(&:to_i).max - numbers.values.map(&:to_i).min
+      numbers.max - numbers.min
     end
   end
 end
