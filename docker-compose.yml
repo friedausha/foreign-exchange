@@ -1,22 +1,29 @@
-web:
-  build: .
-  volumes:
-    - .:/foreign-exchange
-  ports:
-    - "3000:3000"
-  links:
-    - db
-  env_file:
-    - '.env.web'
-db:
-  image: library/mysql:5.7
-  ports:
-    - "13306:3306"
-  volumes:
-    - ./db:/var/lib/mysql
-  environment:
-    - MYSQL_ROOT_PASSWORD=namamu
-    - MYSQL_USER=user
-    - MYSQL_PASSWORD=test
-  expose:
-    - '3306'
+version: '2.1'
+services:
+  app:
+    build: .
+    environment:
+      RAILS_ENV: production
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - 3000:3000
+    links:
+      - mysql:mysql
+    command: bash -c "rails db:setup && rails server -b 0.0.0.0"
+
+  mysql:
+    image: library/mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: shopee
+      MYSQL_PASSWORD: shopee
+    ports:
+      - 3306:3306
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
+      interval: 10s
+      timeout: 10s
+      retries: 1000
+

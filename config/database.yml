@@ -13,14 +13,17 @@ default: &default
   adapter: mysql2
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password: <%= ENV['MYSQL_ROOT_PASSWORD'] %>
-  host: 127.0.0.1
+  username: shopee
+  password: shopee
+  host: mysql
+  port: 3306
 # socket: /var/run/mysqld/mysqld.sock
 
 development:
   <<: *default
   database: foreign_exchange_development
+  username: shopee
+  password: shopee
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -28,6 +31,8 @@ development:
 test:
   <<: *default
   database: foreign_exchange_test
+  username: shopee
+  password: shopee
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -50,6 +55,7 @@ test:
 #
 production:
   <<: *default
+  host: mysql
   database: foreign_exchange_production
-  username: foreign_exchange
-  password: <%= ENV['FOREIGN_EXCHANGE_DATABASE_PASSWORD'] %>
+  username: shopee
+  password: shopee
