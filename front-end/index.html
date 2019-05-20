@@ -1,0 +1,57 @@
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript"></script>
+</head>
+<body>
+<script type="text/javascript" src="main.js"></script>
+<table>
+    <tr>
+        <th>FROM</th>
+        <th>TO</th>
+        <tbody id="tBody"></tbody>
+    </tr>
+</table>
+<div id="detailCurrency"></div>
+<table>
+    <tr>
+        <th>Date</th>
+        <th>Rate</th>
+        <tbody id="detailWeeks"></tbody>
+    </tr>
+</table>
+<table>
+    <tr>
+        <th>Type</th>
+        <th>Input</th>
+        <tbody>
+            <tr>Date</tr><br>
+            <tr>
+                <input type="date" id="date" value="2019-05-22">
+                <button type="submit" onclick="rateIndex()">Search</button>
+            </tr>
+        </tbody>
+    </tr>
+    <tr>
+        <th>FROM</th>
+        <th>TO</th>
+        <th>7 days average</th>
+        <tbody id="tAverage"></tbody>
+    </tr>
+</table>
+<table>
+    <tr>
+        <th>Type</th>
+        <th>Input</th>
+        <tbody>
+            <tr>From</tr>
+            <tr><input type="text" id="from" value=""></tr>
+            <tr>To</tr>
+            <tr><input type="text" id="to" value=""></tr>
+            <button type="submit" onclick="createCurrency()">Create</button>
+        </tbody>
+    </tr>
+</table>
+</body>
+
+</html>
