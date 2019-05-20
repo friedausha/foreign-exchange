@@ -4,7 +4,7 @@ class ExchangeableCurrencyService
     end
 
     def current_currency
-      @current_currency ||= ExchangeableCurrency.find(@id)
+      @current_currency ||= ExchangeableCurrency.find_by(id: @id)
     end
 
     def currency_found?

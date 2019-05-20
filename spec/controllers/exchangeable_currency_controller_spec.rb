@@ -25,7 +25,7 @@ RSpec.describe ExchangeableCurrencyController do
   describe 'GET show' do
     it 'renders current currency' do
       currency = FactoryBot.create(:exchangeable_currency)
-      expect(ExchangeableCurrency).to receive(:find).with(currency.id.to_s).and_return(currency)
+      expect(ExchangeableCurrency).to receive(:find_by).with(id: currency.id.to_s).and_return(currency)
       get :show, params: { id: currency.id }
 
       expect(JSON.parse(response.body)).to eq(JSON.parse(currency.to_json))

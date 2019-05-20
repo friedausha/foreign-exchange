@@ -1,21 +1,44 @@
-module RateHistoryService
-  class << self
-    def find_recent_week_rate(date, exchangeable_currency_id)
-      RateHistory.where(id: exchangeable_currency_id, date: date).to_a
+class RateHistoryService
+    def initialize(date:, exchangeable_currency_id:)
+      @date = date.to_date
+      @exchangeable_currency_id = exchangeable_currency_id
     end
 
-    def count_average(numbers)
-      numbers.sum/numbers.size.to_f
+    def seven_days_rate
+      @seven_days_rate ||= RateHistory.where(exchangeable_currency_id: @exchangeable_currency_id, date: @date-6..@date).to_a
     end
 
-    def seven_days_average(date, exchangeable_currency_id)
-      recent_rates = find_recent_week_rate(date, exchangeable_currency_id)
-      rates_array = recent_rates.map{ |rate| rate.rate }
-      count_average(rates_array)
+    def seven_days_rate_array
+      @seven_days_rate_array ||= seven_days_rate.map{ |rate| rate.rate }
     end
 
-    def count_variance(numbers)
-      numbers.max - numbers.min
+    def seven_days_average
+      @seven_days_average ||= begin
+        seven_days_rate.size == 7 ? CounterService.count_average(seven_days_rate_array) : self.class.insufficient_data
+      end
     end
-  end
+
+    def seven_days_variance
+      @seven_days_variance ||= CounterService.count_variance(seven_days_rate_array)
+    end
+
+    def self.insufficient_data
+      'Insuficient data'
+    end
+
+    def create(rate)
+      currency = ExchangeableCurrencyService.new(@exchangeable_currency_id).current_currency
+      unless currency.present?
+        ExchangeableCurrencyService.not_found
+      end
+      RateHistory.create(date: @date, exchangeable_currency_id: @exchangeable_currency_id, rate: rate)
+    end
+
+    def show
+      currency = ExchangeableCurrencyService.new(@exchangeable_currency_id).current_currency
+      unless currency.present?
+       return ExchangeableCurrencyService.not_found
+      end
+      { rates: seven_days_rate, average: seven_days_average, variance: seven_days_variance }
+    end
 end
