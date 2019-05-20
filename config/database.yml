@@ -57,5 +57,5 @@ production:
   <<: *default
   host: mysql
   database: foreign_exchange_production
-  username: shopee
-  password: shopee
+  username: <%= ENV['MYSQL_USER'] %>
+  password: <%= ENV['MYSQL_PASSWORD'] %>
