@@ -19,7 +19,9 @@ class RateHistoryService
     end
 
     def seven_days_variance
-      @seven_days_variance ||= CounterService.count_variance(seven_days_rate_array)
+      @seven_days_variance ||= begin 
+seven_days_rate_array.size > 0 ? 			CounterService.count_variance(seven_days_rate_array) : 0
+end
     end
 
     def self.insufficient_data
