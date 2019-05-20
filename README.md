@@ -6,19 +6,18 @@ application up and running.
 Things you may want to cover:
 
 * Ruby version
+  2.6.1
 
-* System dependencies
+* run **docker-compose up** to run the program .
 
-* Configuration
+* open file **front-end/index.html** to see the front end
 
-* Database creation
+The database consist of two tables, exchangeable currencies and rate_histories.
 
-* Database initialization
+Exchangeable currencies consists of two columns, from and to.
 
-* How to run the test suite
+Meanwhile rate_histories has foreign key of exchangeable_currency, rate and date.
 
-* Services (job queues, cache servers, search engines, etc.)
+For each table there is a controller from which the routes hit the api. There is also Service package to break down the logic.
 
-* Deployment instructions
-
-* ...
+For unit test, RSpec is used under /spec package.
