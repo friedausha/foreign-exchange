@@ -20,7 +20,7 @@ $(document).ready(function () {
                     '<button onclick="showCurrency(\'' + id  +'\',\'' + from1 + '\',\'' + to  + '\');">Show</button>' +
                     '<button onclick="deleteCurrency(' + id + ');">Delete</button>' + '<td>' +
                     '<p>Rate</p><input type="text" id="rate" value="">' + '</td>' + '<td>' +
-                    '<p>Date</p><input type="date" id="date" value="">' + 
+                    '<p>Date</p><input type="date" id="date" value="">' +
                     '<button onclick="insertRate(' +id + ')">Insert</button>' + '</td>' +
                     '</td>' +
                     '</tr>';
