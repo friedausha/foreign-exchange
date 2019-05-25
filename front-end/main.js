@@ -18,7 +18,10 @@ $(document).ready(function () {
                     '<td>' + to + '</td>' +
                     '<td>' +
                     '<button onclick="showCurrency(\'' + id  +'\',\'' + from1 + '\',\'' + to  + '\');">Show</button>' +
-                    '<button onclick="deleteCurrency(' + id + ');">Delete</button>' +
+                    '<button onclick="deleteCurrency(' + id + ');">Delete</button>' + '<td>' +
+                    '<p>Rate</p><input type="text" id="rate" value="">' + '</td>' + '<td>' +
+                    '<p>Date</p><input type="date" id="date" value="">' + 
+                    '<button onclick="insertRate(' +id + ')">Insert</button>' + '</td>' +
                     '</td>' +
                     '</tr>';
             }
@@ -122,6 +125,28 @@ function createCurrency() {
                     "from": from,
                     "to": to
                 }
+            },
+            success: function (response) {
+                alert("Success !!");
+            },
+            error: function () {
+                alert("Error !!");
+            }
+        }
+    );
+}
+
+function insertRate(id) {
+    var rate = document.getElementById("rate").value;
+    var date = document.getElementById("date").value;
+    $.ajax(
+        {
+            type: 'POST',
+            url: 'http://localhost:3000/history',
+            data: {
+                    "rate": rate,
+                    "date": date,
+                    "exchangeable_currency_id": id
             },
             success: function (response) {
                 alert("Success !!");
