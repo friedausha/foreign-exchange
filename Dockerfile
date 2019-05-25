@@ -12,5 +12,7 @@ RUN bundle install
 
 ADD . /foreign-exchange
 WORKDIR /foreign-exchange
-
+#RUN RAILS_ENV=production bundle exec rails assets:precompile --trace
 RUN RAILS_ENV=production bundle exec rails assets:precompile
+#RUN /etc/init.d/mysql start
+#CMD ["rails","server","-b","0.0.0.0"]

@@ -4,6 +4,9 @@ services:
     build: .
     environment:
       RAILS_ENV: production
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: shopee
+      MYSQL_PASSWORD: shopee
     depends_on:
       mysql:
         condition: service_healthy
@@ -26,4 +29,3 @@ services:
       interval: 10s
       timeout: 10s
       retries: 1000
-
